@@ -7,4 +7,4 @@
 #Symbols folder
 .alpackages/
 #node module
-node_module
+node_modules
