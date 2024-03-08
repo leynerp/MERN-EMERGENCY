@@ -1,2 +1,5 @@
 import initApp from './app.js'
-initApp()  
+import connectDB from './config-bd.js'
+import 'dotenv/config'
+initApp()
+connectDB()
