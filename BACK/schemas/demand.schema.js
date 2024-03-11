@@ -56,7 +56,7 @@ export const demandSchema = new Schema({
 
 }, {
   methods: {
-    findDemandWithFormat () {
+    findDemandWithFormat (page = 1, limit = 10) {
       const registryDate = { $dateToString: { format: '%d-%m-%Y %HH:%mm', date: '$registryDate' } }
       const bloodPressure = '$vitalSign.bloodPressure'
       const respiratoryRate = '$vitalSign.bloodPressure'
@@ -80,7 +80,17 @@ export const demandSchema = new Schema({
 
           }
         },
-        { $limit: 5 }
+        {
+          $facet: {
+            data: [
+              { $skip: (page - 1) * limit },
+              { $limit: limit }
+            ],
+            totalCount: [
+              { $count: 'total' }
+            ]
+          }
+        }
       ]).exec()
     }
   }
