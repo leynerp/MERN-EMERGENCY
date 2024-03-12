@@ -24,6 +24,14 @@ export const demandSchema = new Schema({
     type: Date,
     require: true
   },
+  emergency: {
+    type: String,
+    require: true
+  },
+  address: {
+    type: String,
+    require: true
+  },
   vitalSign: vitalSignalSchema,
   patients: {
     type: String,
@@ -66,6 +74,8 @@ export const demandSchema = new Schema({
         {
           $project: {
             registryDate,
+            emergency: 1,
+            address: 1,
             bloodPressure,
             respiratoryRate,
             bodyTemperature,
