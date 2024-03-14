@@ -7,7 +7,7 @@ export const getDemands = async (req, resp) => {
   resp.status(200).send(demandData)
 }
 
-export const addDemand = (req, resp) => {
+export const addDemand = async (req, resp) => {
   const demandData = { ...req.body }
   const { bloodPressure, respiratoryRate, bodyTemperature, heartRate } = demandData
   delete demandData.bloodPressure
@@ -18,15 +18,27 @@ export const addDemand = (req, resp) => {
   const demandObject = { ...demandData, vitalSign, registryDate: Date.parse(demandData.registryDate) }
   try {
     const demandModel = new DemandModel(demandObject)
-    demandModel.save()
-    resp.status(200).send('Demand save success')
+    await demandModel.save()
+    resp.status(200).json('Demand save success')
   } catch (error) {
     console(error)
   }
 }
-export const updateDemand = (req, resp) => {
-  resp.send('all demands')
+export const updateDemand = async (req, resp) => {
+  const { id, state, priority } = req.body
+  try {
+    await DemandModel.findOneAndUpdate({ _id: id }, { state, priority }, { new: true })
+    resp.status(200).json('Demand update success')
+  } catch (error) {
+    resp.status(404).json('Demand not found')
+  }
 }
-export const deleteDemand = (req, resp) => {
-  resp.send('all demands')
+export const deleteDemand = async (req, resp) => {
+  const { id } = req.body
+  try {
+    await DemandModel.findOneAndDelete({ _id: id })
+    resp.status(200).json('Demand delete success')
+  } catch (error) {
+    resp.status(404).json('Demand not found')
+  }
 }
