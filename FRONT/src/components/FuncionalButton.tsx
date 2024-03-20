@@ -9,15 +9,28 @@ interface FuncionalButtonProps {
   bTitle?: string
   toolTipTitle?: string
   Icon: React.ReactElement
+  active?: boolean
+  onClick?: () => void
 }
-export default function FuncionalButton ({ bTitle, toolTipTitle, Icon }: FuncionalButtonProps) {
+export default function FuncionalButton ({
+  bTitle,
+  toolTipTitle,
+  Icon,
+  active = true,
+  onClick
+}: FuncionalButtonProps) {
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant='ghost'>
+          <Button
+            onClick={onClick}
+            variant='ghost'
+            className='hover:bg-blue-300'
+            disabled={!active}
+          >
             {Icon}
-            {bTitle != null && <p>{bTitle}</p>}
+            {bTitle != null && <p className='px-2'>{bTitle}</p>}
           </Button>
         </TooltipTrigger>
         <TooltipContent className='bg-black text-white'>

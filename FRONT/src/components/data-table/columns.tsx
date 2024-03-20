@@ -1,8 +1,41 @@
 import { type Demand } from '@/types'
 import { type ColumnDef } from '@tanstack/react-table'
 import { Button } from '../ui/button'
+import { Checkbox } from '../ui/checkbox'
 
 export const demandTableColumns: Array<ColumnDef<Demand>> = [
+  {
+    id: 'select',
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && 'indeterminate')
+        }
+        onCheckedChange={(value) => {
+          table.toggleAllPageRowsSelected(!!value)
+        }}
+        aria-label='Select all'
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => {
+          row.toggleSelected(!!value)
+        }}
+        aria-label='Select row'
+      />
+    )
+
+  },
+  {
+    accessorKey: 'status',
+    header: 'Status',
+    cell: ({ row }) => (
+      <div className='capitalize'>{row.getValue('status')}</div>
+    )
+  },
   {
     accessorKey: 'id',
     header: 'ID',
