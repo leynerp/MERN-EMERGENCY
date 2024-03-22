@@ -17,7 +17,7 @@ interface DialogDemandProps {
 export function DialogDemand ({ open, setOpenDialog }: DialogDemandProps) {
   return (
     <Dialog open={open}>
-      <DialogContent className='sm:max-w-[425px]'>
+      <DialogContent className='sm:max-w-[700px]'>
         <DialogPrimitive.Close
           onClick={() => {
             setOpenDialog(!open)
@@ -28,10 +28,7 @@ export function DialogDemand ({ open, setOpenDialog }: DialogDemandProps) {
           <span className='sr-only'>Close</span>
         </DialogPrimitive.Close>
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DialogDescription>
+          <DialogTitle className='pb-4'>Demand data</DialogTitle>
         </DialogHeader>
         <FormDemand></FormDemand>
       </DialogContent>

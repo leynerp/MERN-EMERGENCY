@@ -15,6 +15,37 @@ export interface Demand {
   bodyTemperature: string
   heartRate: string
 }
+// TODO put in other files
+export const EmergencyCode = [
+  {
+    code: 454545,
+    name: 'Cardiac Arrest'
+  },
+  {
+    code: 505050,
+    name: 'Fire'
+  },
+  {
+    code: 606060,
+    name: 'Fire'
+  }
+] as const
+
+export const HealthUnitDestiny = [
+  {
+    code: 12,
+    name: 'Principal Hospital'
+  },
+  {
+    code: 34,
+    name: 'Center Hospital'
+  },
+  {
+    code: 34,
+    name: 'Old Hospital'
+  }
+] as const
+
 export const demandSeed: Demand[] = [
   {
     id: '6508c67b6b80443b91a2ec7f',

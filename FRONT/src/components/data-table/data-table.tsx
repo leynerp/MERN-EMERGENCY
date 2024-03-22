@@ -10,22 +10,25 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow
 } from '@/components/ui/table'
 import { DataTablePagination } from './Pagination'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface DataTableProps<TData, TValue> {
   columns: Array<ColumnDef<TData, TValue>>
   data: TData[]
+  setEnabledUpd: React.Dispatch<React.SetStateAction<boolean>>
+  setEnabledDel: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export function DataTable<TData, TValue> ({
   columns,
-  data
+  data,
+  setEnabledUpd,
+  setEnabledDel
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = useState({})
 
@@ -40,7 +43,17 @@ export function DataTable<TData, TValue> ({
       rowSelection
     }
   })
+  if (table.getSelectedRowModel().rows.length !== 0) {
+    (table.getSelectedRowModel().rows.length === 1) && setEnabledUpd(true)
+    setEnabledDel(true)
+  } else {
+    setEnabledUpd(false)
+    setEnabledDel(false)
+  }
 
+  /* useEffect(() => {
+
+  }, [table.getSelectedRowModel().rows.length]) */
   return (
     <div className='rounded-md border'>
       <Table>
@@ -67,9 +80,6 @@ export function DataTable<TData, TValue> ({
             ? (
                 table.getRowModel().rows.map((row) => (
               <TableRow
-                onClick={(row) => {
-                  console.log(table.getSelectedRowModel())
-                }}
                 key={row.id}
                 data-state={row.getIsSelected() && 'selected'}
               >

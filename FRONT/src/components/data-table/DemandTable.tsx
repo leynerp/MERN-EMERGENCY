@@ -6,14 +6,25 @@ import { useState } from 'react'
 import { DialogDemand } from '../DialogDemand'
 export default function DemandTable () {
   const [openDialog, setOpenDialog] = useState(false)
+  const [enabledUpd, setEnabledUpd] = useState(false)
+  const [enabledDel, setEnabledDel] = useState(false)
   return (
     <div className='w-full h-full'>
-      <ButtonMenu setOpenDialog={setOpenDialog}></ButtonMenu>
+      <ButtonMenu
+        enabledUpd={enabledUpd}
+        enabledDel={enabledDel}
+        setOpenDialog={setOpenDialog}
+      ></ButtonMenu>
       <DialogDemand
         open={openDialog}
         setOpenDialog={setOpenDialog}
       ></DialogDemand>
-      <DataTable columns={demandTableColumns} data={demandSeed} />
+      <DataTable
+        setEnabledUpd={setEnabledUpd}
+        setEnabledDel={setEnabledDel}
+        columns={demandTableColumns}
+        data={demandSeed}
+      />
     </div>
   )
 }

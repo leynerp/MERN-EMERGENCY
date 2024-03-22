@@ -5,9 +5,10 @@ import { useState } from 'react'
 
 interface ButtonMenuProps {
   setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>
+  enabledUpd: boolean
+  enabledDel: boolean
 }
 export default function ButtonMenu ({ ...props }: ButtonMenuProps) {
-  const [updDelActive, setupdDelActive] = useState(false)
   const svgH = 20
   const svgW = 20
   return (
@@ -27,14 +28,14 @@ export default function ButtonMenu ({ ...props }: ButtonMenuProps) {
           props.setOpenDialog(true)
         }}
         bTitle='Update'
-        active={updDelActive}
+        active={props.enabledUpd}
         Icon={<UpdIcon svgH={svgH} svgW={svgW}></UpdIcon>}
       ></FuncionalButton>
       <Separator orientation='vertical' className='h-10' />
       <FuncionalButton
         toolTipTitle='Delete demand'
         bTitle='Delete'
-        active={updDelActive}
+        active={props.enabledDel}
         Icon={<DelIcon svgH={25} svgW={25}></DelIcon>}
       ></FuncionalButton>
     </div>
